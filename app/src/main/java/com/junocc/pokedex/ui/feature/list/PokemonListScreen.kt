@@ -1,7 +1,6 @@
 package com.junocc.pokedex.ui.feature.list
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -18,15 +18,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.rememberAsyncImagePainter
 import com.junocc.pokedex.R
+import com.junocc.pokedex.domain.model.Pokemon
 
 @Composable
-fun PokemonListScreen() {
+fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel()) {
+
+    val state = viewModel.pokemonListState.collectAsStateWithLifecycle()
+
     Column {
         Text(
             modifier = Modifier
@@ -40,15 +46,15 @@ fun PokemonListScreen() {
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(8.dp)
         ) {
-            items(10) { index ->
-                PokemonItem(index)
+            items(state.value) { item ->
+                PokemonItem(item)
             }
         }
     }
 }
 
 @Composable
-fun PokemonItem(index: Int) {
+fun PokemonItem(pokemon: Pokemon) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -61,16 +67,17 @@ fun PokemonItem(index: Int) {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Image(
                 modifier = Modifier
                     .size(120.dp),
-                painter = painterResource(id = R.drawable.bolva),
-                contentDescription = "Imagen $index",
+                painter = rememberAsyncImagePainter(pokemon.getImageUrl()),
+                contentDescription = null,
                 contentScale = ContentScale.FillWidth
             )
             Text(
                 modifier = Modifier.padding(top = 5.dp),
-                text = "Balbasu"
+                text = pokemon.name
             )
         }
     }
