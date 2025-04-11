@@ -11,7 +11,10 @@ class PokemonRepositoryImpl @Inject constructor(
 ) : PokemonRepository {
 
     override suspend fun getPokemonList(): ResultType<List<Pokemon>> {
-        return ResultType.Success(pokemonRemoteDataSource.getPokemonList())
+        return when(val result = pokemonRemoteDataSource.getPokemonList()) {
+            is ResultType.Success -> ResultType.Success(result.data.results)
+            is ResultType.Error -> result
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.junocc.pokedex.data.response
+package com.junocc.pokedex.data.network.response
 
 import com.junocc.pokedex.domain.model.Pokemon
 

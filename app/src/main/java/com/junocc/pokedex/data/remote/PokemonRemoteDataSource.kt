@@ -1,7 +1,8 @@
 package com.junocc.pokedex.data.remote
 
-import com.junocc.pokedex.domain.model.Pokemon
+import com.junocc.pokedex.data.network.response.PokemonListResponse
+import com.junocc.pokedex.domain.util.ResultType
 
 interface PokemonRemoteDataSource {
-    suspend fun getPokemonList() : List<Pokemon>
+    suspend fun getPokemonList() : ResultType<PokemonListResponse>
 }

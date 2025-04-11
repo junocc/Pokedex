@@ -1,6 +1,6 @@
 package com.junocc.pokedex.data.api
 
-import com.junocc.pokedex.data.response.PokemonListResponse
+import com.junocc.pokedex.data.network.response.PokemonListResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
