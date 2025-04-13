@@ -9,8 +9,8 @@ class GetPokemonListUseCase @Inject constructor(
     private val pokemonRepository: PokemonRepository
 ) {
 
-    suspend operator fun invoke(): ResultType<List<Pokemon>> {
-        return pokemonRepository.getPokemonList()
+    suspend operator fun invoke(offset: Int, limit: Int): ResultType<List<Pokemon>> {
+        return pokemonRepository.getPokemonList(offset, limit)
     }
 
 }

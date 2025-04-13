@@ -7,12 +7,12 @@ import com.junocc.pokedex.domain.util.ResultType
 import javax.inject.Inject
 
 class PokemonRemoteDataSourceImpl @Inject constructor(
-    val pokedexApiService: PokedexApiService
+    private val pokedexApiService: PokedexApiService
 ): PokemonRemoteDataSource {
 
-    override suspend fun getPokemonList(): ResultType<PokemonListResponse> {
+    override suspend fun getPokemonList(offset: Int, limit: Int): ResultType<PokemonListResponse> {
         return safeApiCall {
-            pokedexApiService.getPokemons()
+            pokedexApiService.getPokemons(offset, limit)
         }
     }
 
